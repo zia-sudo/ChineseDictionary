@@ -6,19 +6,24 @@ namespace ChineseDictionary
 {
     public class AddCommand
     {
-        // Exécuter la commande pour ajouter un nouveau mot dans le fichier XML
         public void Execute()
         {
-            // Demander la forme traditionnelle du mot
             Console.WriteLine("Ajout d'un nouveau mot au dictionnaire");
 
             Console.Write("Entrez la forme traditionnelle du mot : ");
             string trad = Console.ReadLine();
 
-            // Charger le fichier XML existant
-            XDocument doc = XDocument.Load("cfdict.xml");
+            // Charger le fichier XML
+            XDocument doc = XDocument.Load("./Data/cfdict.xml");
 
-            // Vérifier si le mot existe déjà dans le dictionnaire (par la forme traditionnelle)
+            // Vérifier si l'élément racine est bien <dic>
+            if (doc.Root?.Name != "dic")
+            {
+                Console.WriteLine("Le fichier XML n'a pas une racine valide (<dic> attendue).");
+                return;
+            }
+
+            // Vérifier si le mot existe déjà dans le dictionnaire
             var existingWord = doc.Descendants("word").FirstOrDefault(w =>
                 w.Element("trad")?.Value == trad);
 
@@ -36,7 +41,7 @@ namespace ChineseDictionary
                 return; // Si le mot existe déjà, on arrête l'ajout.
             }
 
-            // Si le mot n'existe pas, demander les autres informations
+            // Récupérer les autres informations
             Console.Write("Entrez la forme simplifiée du mot : ");
             string simp = Console.ReadLine();
 
@@ -47,29 +52,39 @@ namespace ChineseDictionary
             string translationsInput = Console.ReadLine();
             var translations = translationsInput.Split(',');
 
-            // Générer un ID unique pour ce mot
-            string id = Guid.NewGuid().ToString();
+            // Générer un ID unique pour le mot (en s'assurant qu'il est numérique)
+            int newId;
 
-            // Créer un nouvel élément pour le mot à ajouter
+            // Charger les éléments <word> dans le dictionnaire
+            var words = doc.Descendants("word");
+
+            // Vérifier si un ID numérique existe
+            var maxId = words
+                .Where(w => int.TryParse(w.Element("id")?.Value, out _))
+                .Max(w => int.Parse(w.Element("id")?.Value));
+
+            // Générer un nouvel ID en l'incrémentant de 1
+            newId = maxId + 1;
+
+            // Créer un nouvel élément pour le mot
             XElement newWord = new XElement("word",
-                new XElement("id", id),
+                new XElement("id", newId), // Utilisation de l'ID numérique généré
+                new XElement("upd", DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()), // Timestamp actuel
                 new XElement("trad", trad),
                 new XElement("simp", simp),
                 new XElement("py", pinyin),
-                new XElement("trans", new XElement("fr", translations))
+                new XElement("trans", translations.Select(t => new XElement("fr", t.Trim())))
             );
 
-            // Ajouter le mot au document XML
-            doc.Element("words").Add(newWord);
+            // Ajouter le nouvel élément sous la racine <dic>
+            doc.Root.Add(newWord);
 
-            // Sauvegarder le fichier XML mis à jour
-            doc.Save("cfdict.xml");
+            // Sauvegarder le fichier
+            doc.Save("./Data/cfdict.xml");
 
             Console.WriteLine("Le mot a été ajouté avec succès !");
             Console.WriteLine("Informations du mot ajouté :");
-
-            // Afficher les informations du mot ajouté
-            Console.WriteLine($"ID : {id}");
+            Console.WriteLine($"ID : {newId}");
             Console.WriteLine($"Forme Traditionnelle : {trad}");
             Console.WriteLine($"Forme Simplifiée : {simp}");
             Console.WriteLine($"Pinyin : {pinyin}");

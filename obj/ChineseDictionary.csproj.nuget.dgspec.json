@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/zia/Téléchargements/ChineseDictionary/ChineseDictionary.csproj": {}
+    "/home/zia/Téléchargements/M2_S1/ChineseDictionary/ChineseDictionary.csproj": {}
   },
   "projects": {
-    "/home/zia/Téléchargements/ChineseDictionary/ChineseDictionary.csproj": {
+    "/home/zia/Téléchargements/M2_S1/ChineseDictionary/ChineseDictionary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/zia/Téléchargements/ChineseDictionary/ChineseDictionary.csproj",
+        "projectUniqueName": "/home/zia/Téléchargements/M2_S1/ChineseDictionary/ChineseDictionary.csproj",
         "projectName": "ChineseDictionary",
-        "projectPath": "/home/zia/Téléchargements/ChineseDictionary/ChineseDictionary.csproj",
+        "projectPath": "/home/zia/Téléchargements/M2_S1/ChineseDictionary/ChineseDictionary.csproj",
         "packagesPath": "/home/zia/.nuget/packages/",
-        "outputPath": "/home/zia/Téléchargements/ChineseDictionary/obj/",
+        "outputPath": "/home/zia/Téléchargements/M2_S1/ChineseDictionary/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/zia/.nuget/NuGet/NuGet.Config"

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChineseDictionary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd9f3df1c0e1135b6dc8d85301463b7ff4927841")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChineseDictionary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChineseDictionary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
