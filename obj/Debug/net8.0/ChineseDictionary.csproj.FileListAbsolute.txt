@@ -1,0 +1,17 @@
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/ChineseDictionary
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/ChineseDictionary.deps.json
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/ChineseDictionary.runtimeconfig.json
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/ChineseDictionary.dll
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/ChineseDictionary.pdb
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.GeneratedMSBuildEditorConfig.editorconfig
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.AssemblyInfoInputs.cache
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.AssemblyInfo.cs
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.csproj.CoreCompileInputs.cache
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.dll
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/refint/ChineseDictionary.dll
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.pdb
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.genruntimeconfig.cache
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ref/ChineseDictionary.dll
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseDictionary.csproj.AssemblyReference.cache
+/home/zia/Téléchargements/ChineseDictionary/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/zia/Téléchargements/ChineseDictionary/obj/Debug/net8.0/ChineseD.BBA514D0.Up2Date
