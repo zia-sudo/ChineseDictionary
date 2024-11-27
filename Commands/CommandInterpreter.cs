@@ -4,7 +4,9 @@ namespace ChineseDictionary
 {
     public class CommandInterpreter
     {
-        // Modifie la méthode pour retourner un booléen indiquant si le programme doit se fermer
+        private HistoryStack historyStack = new HistoryStack(); // Créer une pile pour l'historique
+
+        // Modifier la méthode pour intégrer l'historique
         public bool Interpret(string input)
         {
             string[] parts = input.Split(' ');
@@ -20,45 +22,63 @@ namespace ChineseDictionary
                     return new ExitCommand().Execute(); // Retourne true pour quitter
                 case "getpinyin":
                     if (parts.Length > 1)
-                        new GetPinyinCommand().Execute(parts[1]);
+                    {
+                        string word = parts[1];
+                        new GetPinyinCommand().Execute(word);
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'getpinyin'.");
                     break;
                 case "gettraditional":
                     if (parts.Length > 1)
-                        new GetTraditionalCommand().Execute(parts[1]);
+                    {
+                        string word = parts[1];
+                        new GetTraditionalCommand().Execute(word);
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'gettraditional'.");
                     break;
                 case "getsimplified":
                     if (parts.Length > 1)
-                        new GetSimplifiedCommand().Execute(parts[1]);
+                    {
+                        string word = parts[1];
+                        new GetSimplifiedCommand().Execute(word);
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'getsimplified'.");
                     break;
                 case "gettranslation":
                     if (parts.Length > 1)
-                        new GetTranslationCommand().Execute(parts[1]);
+                    {
+                        string word = parts[1];
+                        new GetTranslationCommand().Execute(word);
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'gettranslation'.");
                     break;
                 case "search":
                     if (parts.Length > 1)
-                        new SearchCommand().Execute(parts[1]);
+                    {
+                        string word = parts[1];
+                        new SearchCommand().Execute(word);
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'search'.");
                     break;
-                case "save":
-                    new SaveCommand().Execute();
-                    break;
-                case "add":
-                    new AddCommand().Execute();
-                    break;
-                case "remove":
-                    if (parts.Length > 1)
-                        new RemoveCommand().Execute(parts[1]);
+                case "undo":
+                    string lastSearch = historyStack.UndoLastSearch();
+                    if (lastSearch != null)
+                        Console.WriteLine($"Dernière recherche annulée : {lastSearch}");
                     else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'remove'.");
+                        Console.WriteLine("Aucune recherche précédente à annuler.");
+                    break;
+                case "history":
+                    historyStack.ShowHistory(); // Afficher l'historique
                     break;
                 default:
                     Console.WriteLine("Commande inconnue. Tapez 'help' pour afficher les commandes disponibles.");
