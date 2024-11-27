@@ -12,7 +12,7 @@ namespace ChineseDictionary
             Console.WriteLine("Ajout d'un nouveau mot au dictionnaire");
 
             Console.Write("Entrez la forme traditionnelle du mot : ");
-            string trad = Console.ReadLine();
+            string? trad = Console.ReadLine();
 
             if (trad?.ToLower() == "exit") return;
 
@@ -43,7 +43,7 @@ namespace ChineseDictionary
                 Console.WriteLine($"Forme Simplifiée : {existingWord.Element("simp")?.Value}");
                 Console.WriteLine($"Pinyin : {existingWord.Element("py")?.Value}");
                 Console.WriteLine("Traductions : ");
-                foreach (var translation in existingWord.Element("trans").Elements("fr"))
+                foreach (var translation in existingWord.Element("trans")?.Elements("fr") ?? Enumerable.Empty<XElement>())
                 {
                     Console.WriteLine($"  - {translation.Value}");
                 }
@@ -52,17 +52,17 @@ namespace ChineseDictionary
 
             // Récupérer les autres informations
             Console.Write("Entrez la forme simplifiée du mot : ");
-            string simp = Console.ReadLine();
+            string? simp = Console.ReadLine();
 
             if (simp?.ToLower() == "exit") return;
 
             Console.Write("Entrez le pinyin du mot : ");
-            string pinyin = Console.ReadLine();
+            string? pinyin = Console.ReadLine();
 
             if (pinyin?.ToLower() == "exit") return;
 
             Console.Write("Entrez les traductions (séparées par des virgules) : ");
-            string translationsInput = Console.ReadLine();
+            string? translationsInput = Console.ReadLine();
 
             if (translationsInput?.ToLower() == "exit") return;
 
@@ -74,7 +74,7 @@ namespace ChineseDictionary
 
             var maxId = words
                 .Where(w => int.TryParse(w.Element("id")?.Value, out _))
-                .Max(w => int.Parse(w.Element("id")?.Value));
+                .Max(w => int.Parse(w.Element("id")?.Value ?? "0"));
 
             newId = maxId + 1;
 
@@ -87,7 +87,7 @@ namespace ChineseDictionary
                 new XElement("trans", translations.Select(t => new XElement("fr", t.Trim())))
             );
 
-            doc.Root.Add(newWord);
+            doc.Root?.Add(newWord);
             doc.Save("./Data/cfdict.xml");
 
             Console.WriteLine("Le mot a été ajouté avec succès !");
@@ -102,7 +102,7 @@ namespace ChineseDictionary
             }
         }
 
-        private bool IsChinese(string input)
+        private bool IsChinese(string? input)
         {
             if (string.IsNullOrEmpty(input)) return false;
 

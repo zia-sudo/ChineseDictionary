@@ -13,7 +13,7 @@ namespace ChineseDictionary
         {
             // Demander à l'utilisateur quel mot il souhaite enregistrer
             Console.Write("Entrez le mot que vous souhaitez enregistrer : ");
-            string word = Console.ReadLine()?.Trim();
+            string? word = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrEmpty(word))
             {
@@ -41,7 +41,7 @@ namespace ChineseDictionary
             if (data != null)
             {
                 Console.Write("Quel format voulez-vous utiliser pour enregistrer ? (xml, txt, json) : ");
-                string fileType = Console.ReadLine()?.Trim().ToLower();
+                string? fileType = Console.ReadLine()?.Trim().ToLower();
 
                 string filePath;
 

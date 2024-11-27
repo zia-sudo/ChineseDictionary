@@ -81,6 +81,17 @@ namespace ChineseDictionary
                     new AddCommand().Execute();  // Appeler la commande Add
                     break;
 
+                case "remove":
+                    if (parts.Length > 1)
+                    {
+                        string word = parts[1];
+                        new RemoveCommand().Execute(word); // Appeler la commande Remove
+                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                    }
+                    else
+                        Console.WriteLine("Veuillez entrer un mot après la commande 'remove'.");
+                    break;
+                
                 case "undo":
                     string lastSearch = historyStack.UndoLastSearch();
                     if (lastSearch != null)
