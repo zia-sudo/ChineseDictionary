@@ -15,10 +15,19 @@ Ce dossier contient les fichiers responsables de l'exécution des différentes c
 - **`GetPinyinCommand.cs`** : Affiche le pinyin d'un caractère chinois.
 - **`GetSimplifiedCommand.cs`** : Affiche la forme simplifiée d'un caractère chinois.
 - **`GetTraditionalCommand.cs`** : Affiche la forme traditionnelle d'un caractère chinois.
-- **`SaveCommand.cs`** : Sauvegarde les données du dictionnaire.
+- **`SaveCommand.cs`** : Sauvegarde les données du dictionnaire dans json, txt ou xml.
 - **`GetTranslationCommand.cs`** : Affiche la traduction d'un caractère chinois.
 - **`SearchCommand.cs`** : Recherche un caractère ou mot dans le dictionnaire.
 - **`CommandInterpreter.cs`** : Interprète les commandes et exécute la commande correspondante.
+
+### Dossier `Pile`
+
+Le dossier Pile contient la logique de gestion de l'historique des recherches. La classe HistoryStack gère une pile de mots recherchés, permettant d'ajouter, de récupérer et de supprimer des mots dans l'historique. Voici un aperçu des fonctionnalités principales de cette classe :
+
+Ajouter un mot à l'historique : La méthode AddToHistory(string word) permet d'ajouter un mot à la pile.
+Récupérer le dernier mot recherché : La méthode GetLastSearch() retourne le mot le plus récemment ajouté.
+Annuler la dernière recherche : La méthode UndoLastSearch() supprime et retourne le dernier mot de la pile.
+Afficher l'historique des recherches : La méthode ShowHistory() affiche tous les mots enregistrés dans l'historique.
 
 ### Dossier `Data`
 
@@ -58,6 +67,8 @@ Voici un aperçu des commandes disponibles dans l'application :
 - **`save`** : Sauvegarder les données du dictionnaire.
 - **`gettranslation`** : Afficher la traduction d'un caractère chinois.
 - **`search`** : Rechercher un mot ou un caractère dans le dictionnaire afin d'obtenir toutes les informations du mot.
+- **`undo`** : Annuler la dernière recherche effectuée. Cette commande permet de retirer le dernier mot ajouté à l'historique des recherches.
+- **`history`** : Afficher l'historique des mots recherchés précédemment. Cette commande permet de consulter la liste des mots recherchés, avec leur index.
 
 ### Exemple de commande
 
