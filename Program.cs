@@ -17,11 +17,15 @@ namespace ChineseDictionary
             while (!exitProgram)
             {
                 Console.Write("\n> ");
-                string input = Console.ReadLine()?.Trim().ToLower();
+                string? input = Console.ReadLine()?.Trim().ToLower(); // Autorise les valeurs nulles
 
                 if (!string.IsNullOrEmpty(input))
                 {
-                    exitProgram = interpreter.Interpret(input);  // Si true, quitter la boucle
+                    exitProgram = interpreter.Interpret(input); // Si true, quitter la boucle
+                }
+                else
+                {
+                    Console.WriteLine("Entrée invalide. Veuillez essayer à nouveau.");
                 }
             }
 

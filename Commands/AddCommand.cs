@@ -14,7 +14,7 @@ namespace ChineseDictionary
             Console.Write("Entrez la forme traditionnelle du mot : ");
             string? trad = Console.ReadLine();
 
-            if (trad?.ToLower() == "exit") return;
+            if (string.IsNullOrWhiteSpace(trad) || trad.ToLower() == "exit") return;
 
             // Vérifier si la saisie est en caractères chinois
             if (!IsChinese(trad))
@@ -26,7 +26,7 @@ namespace ChineseDictionary
             // Charger le fichier XML
             XDocument doc = XDocument.Load("./Data/cfdict.xml");
 
-            if (doc.Root?.Name != "dic")
+            if (doc.Root == null || doc.Root.Name != "dic")
             {
                 Console.WriteLine("Le fichier XML n'a pas une racine valide (<dic> attendue).");
                 return;
@@ -54,17 +54,17 @@ namespace ChineseDictionary
             Console.Write("Entrez la forme simplifiée du mot : ");
             string? simp = Console.ReadLine();
 
-            if (simp?.ToLower() == "exit") return;
+            if (string.IsNullOrWhiteSpace(simp) || simp.ToLower() == "exit") return;
 
             Console.Write("Entrez le pinyin du mot : ");
             string? pinyin = Console.ReadLine();
 
-            if (pinyin?.ToLower() == "exit") return;
+            if (string.IsNullOrWhiteSpace(pinyin) || pinyin.ToLower() == "exit") return;
 
             Console.Write("Entrez les traductions (séparées par des virgules) : ");
             string? translationsInput = Console.ReadLine();
 
-            if (translationsInput?.ToLower() == "exit") return;
+            if (string.IsNullOrWhiteSpace(translationsInput) || translationsInput.ToLower() == "exit") return;
 
             var translations = translationsInput.Split(',');
 
@@ -87,7 +87,7 @@ namespace ChineseDictionary
                 new XElement("trans", translations.Select(t => new XElement("fr", t.Trim())))
             );
 
-            doc.Root?.Add(newWord);
+            doc.Root.Add(newWord);
             doc.Save("./Data/cfdict.xml");
 
             Console.WriteLine("Le mot a été ajouté avec succès !");

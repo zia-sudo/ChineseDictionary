@@ -14,13 +14,13 @@ namespace ChineseDictionary
         }
 
         // Récupérer le dernier mot recherché
-        public string GetLastSearch()
+        public string? GetLastSearch()
         {
             return history.Count > 0 ? history[history.Count - 1] : null;  // Dernier élément de la liste
         }
 
         // Supprimer le dernier mot de l'historique
-        public string UndoLastSearch()
+        public string? UndoLastSearch()
         {
             if (history.Count > 0)
             {

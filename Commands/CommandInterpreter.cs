@@ -6,13 +6,11 @@ namespace ChineseDictionary
     {
         private HistoryStack historyStack = new HistoryStack(); // Créer une pile pour l'historique
 
-        // Modifier la méthode pour intégrer l'historique
         public bool Interpret(string input)
         {
-            string[] parts = input.Split(' ');
-            string command = parts[0];
+            string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string command = parts.Length > 0 ? parts[0] : string.Empty;
 
-            // Vérifier la commande et appeler la méthode appropriée
             switch (command)
             {
                 case "help":
@@ -20,99 +18,79 @@ namespace ChineseDictionary
                     break;
 
                 case "exit":
-                    return new ExitCommand().Execute(); // Retourne true pour quitter
+                    return new ExitCommand().Execute();
 
                 case "getpinyin":
-                    if (parts.Length > 1)
-                    {
-                        string word = parts[1];
-                        new GetPinyinCommand().Execute(word);
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
-                    }
-                    else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'getpinyin'.");
-                    break;
-
                 case "gettraditional":
-                    if (parts.Length > 1)
-                    {
-                        string word = parts[1];
-                        new GetTraditionalCommand().Execute(word);
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
-                    }
-                    else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'gettraditional'.");
-                    break;
-
                 case "getsimplified":
-                    if (parts.Length > 1)
-                    {
-                        string word = parts[1];
-                        new GetSimplifiedCommand().Execute(word);
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
-                    }
-                    else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'getsimplified'.");
-                    break;
-                
                 case "gettranslation":
-                    if (parts.Length > 1)
-                    {
-                        string word = parts[1];
-                        new GetTranslationCommand().Execute(word);
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
-                    }
-                    else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'gettranslation'.");
-                    break;
-
                 case "search":
-                    if (parts.Length > 1)
-                    {
-                        string word = parts[1];
-                        new SearchCommand().Execute(word);
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
-                    }
-                    else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'search'.");
-                    break;
-
-                case "add":
-                    new AddCommand().Execute();  // Appeler la commande Add
-                    break;
-
                 case "remove":
                     if (parts.Length > 1)
                     {
                         string word = parts[1];
-                        new RemoveCommand().Execute(word); // Appeler la commande Remove
-                        historyStack.AddToHistory(word); // Ajouter à l'historique
+                        ExecuteCommand(command, word);
                     }
                     else
-                        Console.WriteLine("Veuillez entrer un mot après la commande 'remove'.");
+                        Console.WriteLine($"Veuillez entrer un mot après la commande '{command}'.");
+                    break;
+
+                case "add":
+                    new AddCommand().Execute();
                     break;
 
                 case "save":
-                    new SaveCommand().Execute();  // Appeler la commande Save
+                    new SaveCommand().Execute();
                     break;
-                    
+
                 case "undo":
-                    string lastSearch = historyStack.UndoLastSearch();
-                    if (lastSearch != null)
-                        Console.WriteLine($"Dernière recherche annulée : {lastSearch}");
-                    else
-                        Console.WriteLine("Aucune recherche précédente à annuler.");
+                    string? lastSearch = historyStack.UndoLastSearch();
+                    Console.WriteLine(lastSearch != null
+                        ? $"Dernière recherche annulée : {lastSearch}"
+                        : "Aucune recherche précédente à annuler.");
                     break;
 
                 case "history":
-                    historyStack.ShowHistory(); // Afficher l'historique
+                    historyStack.ShowHistory();
                     break;
 
                 default:
                     Console.WriteLine("Commande inconnue. Tapez 'help' pour afficher les commandes disponibles.");
                     break;
             }
-            return false;  // Ne quitte pas le programme
+
+            return false;
+        }
+
+        private void ExecuteCommand(string command, string word)
+        {
+            switch (command)
+            {
+                case "getpinyin":
+                    new GetPinyinCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+                case "gettraditional":
+                    new GetTraditionalCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+                case "getsimplified":
+                    new GetSimplifiedCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+                case "gettranslation":
+                    new GetTranslationCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+                case "search":
+                    new SearchCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+                case "remove":
+                    new RemoveCommand().Execute(word);
+                    historyStack.AddToHistory(word);
+                    break;
+            }
         }
     }
 }
