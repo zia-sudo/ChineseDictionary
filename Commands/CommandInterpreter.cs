@@ -54,7 +54,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'getsimplified'.");
                     break;
-
+                
                 case "gettranslation":
                     if (parts.Length > 1)
                     {
@@ -77,6 +77,10 @@ namespace ChineseDictionary
                         Console.WriteLine("Veuillez entrer un mot après la commande 'search'.");
                     break;
 
+                case "add":
+                    new AddCommand().Execute();  // Appeler la commande Add
+                    break;
+
                 case "undo":
                     string lastSearch = historyStack.UndoLastSearch();
                     if (lastSearch != null)
@@ -84,10 +88,11 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Aucune recherche précédente à annuler.");
                     break;
-                    
+
                 case "history":
                     historyStack.ShowHistory(); // Afficher l'historique
                     break;
+
                 default:
                     Console.WriteLine("Commande inconnue. Tapez 'help' pour afficher les commandes disponibles.");
                     break;
