@@ -91,7 +91,11 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'remove'.");
                     break;
-                
+
+                case "save":
+                    new SaveCommand().Execute();  // Appeler la commande Save
+                    break;
+                    
                 case "undo":
                     string lastSearch = historyStack.UndoLastSearch();
                     if (lastSearch != null)

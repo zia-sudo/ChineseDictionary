@@ -22,7 +22,7 @@ namespace ChineseDictionary
             }
 
             // Charger le fichier XML avec les données des mots
-            XDocument doc = XDocument.Load("cfdict.xml");
+            XDocument doc = XDocument.Load("./Data/cfdict.xml");
 
             // Rechercher les informations du mot dans le fichier XML
             var result = from w in doc.Descendants("word")
