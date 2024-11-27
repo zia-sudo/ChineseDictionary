@@ -9,7 +9,7 @@ namespace ChineseDictionary
         // Exécuter la commande pour obtenir la traduction d'un mot
         public void Execute(string word)
         {
-            XDocument doc = XDocument.Load("cfdict.xml");
+            XDocument doc = XDocument.Load("./Data/cfdict.xml");
 
             var result = from w in doc.Descendants("word")
                          where w.Element("trad")?.Value == word || w.Element("simp")?.Value == word

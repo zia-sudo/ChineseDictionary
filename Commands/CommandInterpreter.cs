@@ -54,6 +54,12 @@ namespace ChineseDictionary
                 case "add":
                     new AddCommand().Execute();
                     break;
+                case "remove":
+                    if (parts.Length > 1)
+                        new RemoveCommand().Execute(parts[1]);
+                    else
+                        Console.WriteLine("Veuillez entrer un mot après la commande 'remove'.");
+                    break;
                 default:
                     Console.WriteLine("Commande inconnue. Tapez 'help' pour afficher les commandes disponibles.");
                     break;

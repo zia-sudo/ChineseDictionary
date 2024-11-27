@@ -6,38 +6,84 @@ namespace ChineseDictionary
 {
     public class SearchCommand
     {
-        // Exécuter la commande de recherche pour afficher toutes les informations du mot
         public void Execute(string word)
         {
+            if (string.IsNullOrWhiteSpace(word))
+            {
+                Console.WriteLine("Veuillez entrer un mot valide.");
+                return;
+            }
+
+            // Normalisation de l'entrée utilisateur
+            word = word.Trim();
+
+            // Charger le fichier XML
             XDocument doc = XDocument.Load("./Data/cfdict.xml");
 
-            var result = from w in doc.Descendants("word")
-                         where w.Element("trad")?.Value == word || w.Element("simp")?.Value == word
-                         select new
-                         {
-                             Traditional = w.Element("trad")?.Value,
-                             Simplified = w.Element("simp")?.Value,
-                             Pinyin = w.Element("py")?.Value,
-                             Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList()
-                         };
+            // Recherche stricte (exacte) insensible à la casse
+            var exactMatch = from w in doc.Descendants("word")
+                             where string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                                || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                                || string.Equals(w.Element("py")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                             select new
+                             {
+                                 Traditional = w.Element("trad")?.Value,
+                                 Simplified = w.Element("simp")?.Value,
+                                 Pinyin = w.Element("py")?.Value,
+                                 Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList()
+                             };
 
-            var data = result.FirstOrDefault();
+            var result = exactMatch.FirstOrDefault();
 
-            if (data != null)
+            if (result != null)
             {
                 Console.WriteLine("Informations pour le mot : " + word);
-                Console.WriteLine("Forme Traditionnelle : " + data.Traditional);
-                Console.WriteLine("Forme Simplifiée : " + data.Simplified);
-                Console.WriteLine("Pinyin : " + data.Pinyin);
+                Console.WriteLine("Forme Traditionnelle : " + result.Traditional);
+                Console.WriteLine("Forme Simplifiée : " + result.Simplified);
+                Console.WriteLine("Pinyin : " + result.Pinyin);
                 Console.WriteLine("Traductions : ");
-                foreach (var translation in data.Translations)
+                foreach (var translation in result.Translations)
                 {
                     Console.WriteLine("  - " + translation);
                 }
             }
             else
             {
-                Console.WriteLine("Aucune information trouvée pour ce mot.");
+                Console.WriteLine("Aucune correspondance exacte trouvée pour le mot : " + word);
+                Console.WriteLine("Recherche de mots similaires...");
+
+                var partialMatches = from w in doc.Descendants("word")
+                                     where (w.Element("trad")?.Value.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                                        || (w.Element("simp")?.Value.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                                        || (w.Element("py")?.Value.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                                     select new
+                                     {
+                                         Traditional = w.Element("trad")?.Value,
+                                         Simplified = w.Element("simp")?.Value,
+                                         Pinyin = w.Element("py")?.Value,
+                                         Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList()
+                                     };
+
+                if (partialMatches.Any())
+                {
+                    Console.WriteLine("Résultats similaires :");
+                    foreach (var match in partialMatches)
+                    {
+                        Console.WriteLine("----");
+                        Console.WriteLine("Forme Traditionnelle : " + match.Traditional);
+                        Console.WriteLine("Forme Simplifiée : " + match.Simplified);
+                        Console.WriteLine("Pinyin : " + match.Pinyin);
+                        Console.WriteLine("Traductions : ");
+                        foreach (var translation in match.Translations)
+                        {
+                            Console.WriteLine("  - " + translation);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Aucun mot similaire trouvé dans le dictionnaire.");
+                }
             }
         }
     }
