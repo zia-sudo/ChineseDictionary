@@ -18,8 +18,10 @@ namespace ChineseDictionary
                 case "help":
                     new HelpCommand().Execute();
                     break;
+
                 case "exit":
                     return new ExitCommand().Execute(); // Retourne true pour quitter
+
                 case "getpinyin":
                     if (parts.Length > 1)
                     {
@@ -30,6 +32,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'getpinyin'.");
                     break;
+
                 case "gettraditional":
                     if (parts.Length > 1)
                     {
@@ -40,6 +43,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'gettraditional'.");
                     break;
+
                 case "getsimplified":
                     if (parts.Length > 1)
                     {
@@ -50,6 +54,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'getsimplified'.");
                     break;
+
                 case "gettranslation":
                     if (parts.Length > 1)
                     {
@@ -60,6 +65,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'gettranslation'.");
                     break;
+
                 case "search":
                     if (parts.Length > 1)
                     {
@@ -70,6 +76,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Veuillez entrer un mot après la commande 'search'.");
                     break;
+
                 case "undo":
                     string lastSearch = historyStack.UndoLastSearch();
                     if (lastSearch != null)
@@ -77,6 +84,7 @@ namespace ChineseDictionary
                     else
                         Console.WriteLine("Aucune recherche précédente à annuler.");
                     break;
+                    
                 case "history":
                     historyStack.ShowHistory(); // Afficher l'historique
                     break;
