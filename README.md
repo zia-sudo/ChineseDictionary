@@ -58,15 +58,15 @@ Afficher l'historique des recherches : La méthode ShowHistory() affiche tous le
 
 Voici un aperçu des commandes disponibles dans l'application :
 
-- **`add`** : Ajouter un nouveau mot dans le dictionnaire.
+- **`add`** : Ajouter un nouveau mot dans le dictionnaire. Vous entrez la commande sans rien mettre puis le dictionnaire vous guidera à mettre la forme tradictionnelle du caractère, puis la forme simplifiée, ensuite la traduction, s'il existe plusieurs traductions pour ce caractère, vous pouvez les séparer par une virgule. Si le caractère a été bien enregistré, vous verrez un aperçu du caractère que vous avez enregistré. Le dictionnaire lui attribuera également un numéro automatiquement.
 - **`exit`** : Quitter l'application.
 - **`help`** : Afficher les commandes disponibles et leur usage.
-- **`getpinyin`** : Afficher le pinyin d'un caractère chinois.
-- **`getsimplified`** : Afficher la forme simplifiée d'un caractère chinois.
-- **`gettraditional`** : Afficher la forme traditionnelle d'un caractère chinois.
-- **`save`** : Sauvegarder les données du dictionnaire.
-- **`gettranslation`** : Afficher la traduction d'un caractère chinois.
-- **`search`** : Rechercher un mot ou un caractère dans le dictionnaire afin d'obtenir toutes les informations du mot.
+- **`getpinyin`** : Afficher le pinyin d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
+- **`getsimplified`** : Afficher la forme simplifiée d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
+- **`gettraditional`** : Afficher la forme traditionnelle d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
+- **`save`** : Sauvegarder les données du dictionnaire. Une fois que vous avez tapé la commande **`save`** , vous cliquez sur **`Entry`**  le dictionnaire vous demandera ensuite de choisir le caractère que vous voulez enregistrer puis il demandera le format du fichier que vous souhaitez choisir.
+- **`gettranslation`** : Afficher la traduction d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
+- **`search`** : Rechercher un mot ou un caractère dans le dictionnaire afin d'obtenir toutes les informations du mot. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
 - **`undo`** : Annuler la dernière recherche effectuée. Cette commande permet de retirer le dernier mot ajouté à l'historique des recherches.
 - **`history`** : Afficher l'historique des mots recherchés précédemment. Cette commande permet de consulter la liste des mots recherchés, avec leur index.
 
