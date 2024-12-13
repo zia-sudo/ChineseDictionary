@@ -54,29 +54,66 @@ Afficher l'historique des recherches : La méthode ShowHistory() affiche tous le
 5. **Aide et Commandes** :
    - Offre une fonctionnalité d'aide pour afficher les commandes disponibles et leur usage.
 
-## Commandes disponibles
+## Commandes disponibles et leurs usages
 
-Voici un aperçu des commandes disponibles dans l'application :
+### 1. **Ajouter un mot dans le dictionnaire** : `add`
+Ajoutez un nouveau mot dans le dictionnaire en suivant ces étapes :
+1. Entrez la commande `add`.
+2. Suivez les instructions :
+   - Saisissez la **forme traditionnelle** du caractère.
+   - Saisissez la **forme simplifiée** du caractère.
+   - Saisissez la **traduction** du caractère (si plusieurs traductions existent, séparez-les par une virgule `,`).
+3. Une fois le caractère enregistré, un aperçu sera affiché, et un numéro sera automatiquement attribué par le dictionnaire.
 
-- **`add`** : Ajouter un nouveau mot dans le dictionnaire. Vous entrez la commande sans rien mettre puis le dictionnaire vous guidera à mettre la forme tradictionnelle du caractère, puis la forme simplifiée, ensuite la traduction, s'il existe plusieurs traductions pour ce caractère, vous pouvez les séparer par une virgule. Si le caractère a été bien enregistré, vous verrez un aperçu du caractère que vous avez enregistré. Le dictionnaire lui attribuera également un numéro automatiquement.
-- **`exit`** : Quitter l'application.
-- **`help`** : Afficher les commandes disponibles et leur usage.
-- **`getpinyin`** : Afficher le pinyin d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
-- **`getsimplified`** : Afficher la forme simplifiée d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
-- **`gettraditional`** : Afficher la forme traditionnelle d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
-- **`save`** : Sauvegarder les données du dictionnaire. Une fois que vous avez tapé la commande **`save`** , vous cliquez sur **`Entry`**  le dictionnaire vous demandera ensuite de choisir le caractère que vous voulez enregistrer puis il demandera le format du fichier que vous souhaitez choisir.
-- **`gettranslation`** : Afficher la traduction d'un caractère chinois. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
-- **`search`** : Rechercher un mot ou un caractère dans le dictionnaire afin d'obtenir toutes les informations du mot. Pour l'utiliser, vous devez mettre un caractère derrière la commande en mettant un espace entre la commande et le caractère.
-- **`undo`** : Annuler la dernière recherche effectuée. Cette commande permet de retirer le dernier mot ajouté à l'historique des recherches.
-- **`history`** : Afficher l'historique des mots recherchés précédemment. Cette commande permet de consulter la liste des mots recherchés, avec leur index.
+### 2. **Quitter l'application** : `exit`
+- Entrez simplement `exit` pour fermer l'application.
 
-### Exemple de commande
+### 3. **Afficher les commandes disponibles** : `help`
+- Tapez `help` pour afficher la liste des commandes et leur utilisation.
 
-- Pour ajouter un mot : add
-Ensuite, l'application demandera à l'utilisateur d'entrer les informations nécessaires pour le mot à ajouter.
+### 4. **Afficher le pinyin d’un caractère chinois** : `getpinyin`
+1. Tapez `getpinyin` suivi d'un espace.
+2. Ajoutez le caractère chinois dont vous souhaitez obtenir le pinyin.
+   
+   **Exemple :** `getpinyin 你`
 
-- Pour rechercher toutes les informations d'un mot : search
-Ensuite, l'application demandera à l'utlisateur d'entrer le thème qu'il veut rechercher, l'utilisateur peut saisir soit la forme traditionnelle, soit le pinyin, soit la forme simplifiée, soit la traduction.
+### 5. **Afficher la forme simplifiée d’un caractère chinois** : `getsimplified`
+1. Tapez `getsimplified` suivi d'un espace.
+2. Ajoutez le caractère chinois dont vous souhaitez obtenir la forme simplifiée.
+   
+   **Exemple :** `getsimplified 你`
+
+### 6. **Afficher la forme traditionnelle d’un caractère chinois** : `gettraditional`
+1. Tapez `gettraditional` suivi d'un espace.
+2. Ajoutez le caractère chinois dont vous souhaitez obtenir la forme traditionnelle.
+   
+   **Exemple :** `gettraditional 你`
+
+### 7. **Sauvegarder les données du dictionnaire** : `save`
+1. Tapez la commande `save`.
+2. Appuyez sur la touche `Entrée`.
+3. L’application vous demandera de :
+   - Choisir le caractère à enregistrer.
+   - Spécifier le format du fichier (par exemple : `.txt`, `.json`, `.xml`, ).
+
+### 8. **Afficher la traduction d’un caractère chinois** : `gettranslation`
+1. Tapez `gettranslation` suivi d'un espace.
+2. Ajoutez le caractère chinois dont vous souhaitez obtenir la traduction.
+   
+   **Exemple :** `gettranslation 你`
+
+### 9. **Rechercher un mot ou un caractère** : `search`
+1. Tapez `search` suivi d'un espace.
+2. Ajoutez le mot ou le caractère chinois à rechercher.
+3. Le dictionnaire affichera toutes les informations relatives à ce mot ou caractère.
+   
+   **Exemple :** `search 你`
+
+### 10. **Annuler la dernière recherche effectuée** : `undo`
+- Tapez simplement `undo` pour retirer le dernier mot ajouté à l’historique des recherches.
+
+### 11. **Afficher l’historique des recherches** : `history`
+- Tapez `history` pour afficher la liste des mots recherchés précédemment avec leur index.
 
 ### Prérequis
 .NET 5.0 ou supérieur : Le projet utilise le framework .NET.
