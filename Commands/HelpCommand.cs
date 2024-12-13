@@ -14,14 +14,14 @@ namespace ChineseDictionary
             Console.WriteLine("5. gettraditional <caractere>   - Recherche la forme traditionnelle d'un mot chinois.");
             Console.WriteLine("6. gettranslation <caractere>   - Recherche la traduction d'un mot chinois en français.");
             Console.WriteLine("7. search <caractere>           - Recherche un mot dans le dictionnaire (affiche toutes les informations).");
-            Console.WriteLine("8. save                         - Sauvegarde les résultats de recherche dans un fichier XML. Vous tapez la commande save puis vous choisissez le caractère que vous voulez enregistrer puis vous choisissez le format.");
+            Console.WriteLine("8. save                         - Sauvegarde les résultats de recherche dans un fichier XML, JSON, TXT");
             Console.WriteLine("9. add                          - Ajoute un nouveau mot dans le dictionnaire.");
             Console.WriteLine("10. undo                        - Annule la dernière recherche effectuée.");
             Console.WriteLine("11. history                     - Affiche l'historique des recherches effectuées.");
             Console.WriteLine("\n--- Instructions supplémentaires ---");
             Console.WriteLine("Lorsque vous entrez une commande nécessitant un mot, comme 'getpinyin', 'gettranslation', etc.,");
             Console.WriteLine("vous devrez entrer un mot chinois que vous souhaitez rechercher.");
-            Console.WriteLine("Par exemple : 'getpinyin' suivi d'un mot chinois comme '𡳞'.");
+            Console.WriteLine("Par exemple : 'getpinyin' suivi d'un mot chinois comme '你好'.");
             Console.WriteLine("\nTapez 'exit' à tout moment pour quitter le programme.");
         }
     }
