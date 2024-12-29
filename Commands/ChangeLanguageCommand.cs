@@ -23,8 +23,8 @@ namespace ChineseDictionary
             {
                 helpCommand.SetLanguage(lang);
                 Console.WriteLine(lang == "fr"
-                    ? "Langue changée en français. Les messages d'aide seront désormais affichés en français."
-                    : "Language switched to English. Help messages will now be displayed in English.");
+                    ? "Les messages d'aide seront désormais affichés en français."
+                    : "Help messages will now be displayed in English.");
             }
             else
             {

@@ -1,149 +1,160 @@
-# ChineseDictionary
+# **ChineseDictionary**
 
-**ChineseDictionary** est une application console en C# permettant d'interagir avec un dictionnaire chinois-français. Elle offre des fonctionnalités telles que la recherche de mots, l'ajout d'entrées, la récupération de traductions et de pinyin, ainsi que la gestion des données du dictionnaire.
+**ChineseDictionary** est une application console écrite en C# qui permet d'interagir avec un dictionnaire chinois-français. Ce programme offre des fonctionnalités variées, telles que :
+- La recherche de mots chinois.
+- L'affichage des pinyin, formes simplifiées ou traditionnelles.
+- L'ajout de nouvelles entrées au dictionnaire.
+- La sauvegarde des données dans divers formats.
+- La gestion multilingue (français et anglais) pour les commandes.
 
-Ce projet a été réalisé dans le cadre du cours POO C# au premier semestre en M2.
+Ce projet a été réalisé dans le cadre du cours de Programmation Orientée Objet en C# au premier semestre de Master 2.
 
-## Structure du projet
+---
 
-### Dossier `Commands`
-Ce dossier contient les fichiers responsables de l'exécution des différentes commandes dans l'application.
+## **Structure du projet**
 
-- **`AddCommand.cs`** : Permet d'ajouter une nouvelle entrée dans le dictionnaire.
-- **`ExitCommand.cs`** : Permet de quitter l'application.
-- **`HelpCommand.cs`** : Affiche les commandes disponibles et leur usage.
-- **`GetPinyinCommand.cs`** : Affiche le pinyin d'un caractère chinois.
-- **`GetSimplifiedCommand.cs`** : Affiche la forme simplifiée d'un caractère chinois.
-- **`GetTraditionalCommand.cs`** : Affiche la forme traditionnelle d'un caractère chinois.
-- **`SaveCommand.cs`** : Sauvegarde les données du dictionnaire dans json, txt ou xml.
-- **`GetTranslationCommand.cs`** : Affiche la traduction d'un caractère chinois.
-- **`SearchCommand.cs`** : Recherche un caractère ou mot dans le dictionnaire.
-- **`CommandInterpreter.cs`** : Interprète les commandes et exécute la commande correspondante.
+### **1. Dossier `Commands`**
+Ce dossier contient les classes responsables de l'exécution des différentes commandes disponibles dans l'application.
 
-### Dossier `Pile`
+- **`AddCommand.cs`** : Ajoute une nouvelle entrée au dictionnaire.
+- **`ExitCommand.cs`** : Quitte proprement l'application.
+- **`HelpCommand.cs`** : Liste toutes les commandes disponibles avec leur description.
+- **`GetPinyinCommand.cs`** : Affiche le pinyin d'un caractère ou mot chinois.
+- **`GetSimplifiedCommand.cs`** : Affiche la forme simplifiée d'un caractère ou mot chinois.
+- **`GetTraditionalCommand.cs`** : Affiche la forme traditionnelle d'un caractère ou mot chinois.
+- **`GetTranslationCommand.cs`** : Affiche la traduction française d'un caractère ou mot chinois.
+- **`SearchCommand.cs`** : Recherche un caractère ou mot chinois dans le dictionnaire.
+- **`SaveCommand.cs`** : Sauvegarde les résultats dans un fichier (formats disponibles : JSON, TXT, XML).
+- **`ChangeLanguageCommand.cs`** : Permet de basculer entre les langues disponibles (français/anglais).
+- **`InvalidCommandException.cs`** : Exception personnalisée pour gérer les commandes inconnues et afficher un message clair à l'utilisateur.  
+  **Exemple :** Lorsque l'utilisateur entre une commande invalide, un message tel que `La commande 'random' est inconnue. Tapez 'help' pour afficher les commandes disponibles.` s'affiche.
+- **`XmlCache.cs`** : Gère le chargement et la mise en cache des données du dictionnaire à partir du fichier XML principal.  
+  Voir la section dédiée pour plus de détails.
 
-Le dossier Pile contient la logique de gestion de l'historique des recherches. La classe HistoryStack gère une pile de mots recherchés, permettant d'ajouter, de récupérer et de supprimer des mots dans l'historique. Voici un aperçu des fonctionnalités principales de cette classe :
+### **2. Dossier `Pile`**
+Ce dossier contient la gestion de l'historique des recherches via la classe `HistoryStack`. Les fonctionnalités incluent :
+- **Ajouter un mot à l'historique** : `AddToHistory(string word)`.
+- **Récupérer le dernier mot recherché** : `GetLastSearch()`.
+- **Annuler la dernière recherche** : `UndoLastSearch()`.
+- **Afficher l'historique complet** : `ShowHistory()`.
 
-Ajouter un mot à l'historique : La méthode AddToHistory(string word) permet d'ajouter un mot à la pile.
-Récupérer le dernier mot recherché : La méthode GetLastSearch() retourne le mot le plus récemment ajouté.
-Annuler la dernière recherche : La méthode UndoLastSearch() supprime et retourne le dernier mot de la pile.
-Afficher l'historique des recherches : La méthode ShowHistory() affiche tous les mots enregistrés dans l'historique.
+### **3. Dossier `Data`**
+- **`cfdict.xml`** : Le fichier principal contenant les données du dictionnaire (mots, pinyin, formes simplifiées/traditionnelles, traductions).
 
-### Dossier `Data`
+### **4. Dossier `Main`**
+- **`Program.cs`** : Point d'entrée principal de l'application. C'est ici que l'exécution commence.
 
-- **`cfdict.xml`** : Le fichier XML contenant toutes les données du dictionnaire, telles que les mots, les formes traditionnelles et simplifiées, les pinyin et les traductions.
+---
 
-### Dossier `Main`
+## **XmlCache.cs : Gestion optimisée des données**
 
-- **`Program.cs`** : Le point d'entrée principal de l'application, où l'exécution du programme commence.
+La classe **`XmlCache`** est responsable de la gestion du fichier XML principal contenant les données du dictionnaire. Elle optimise les performances en mettant en cache le contenu du fichier pour éviter de le charger plusieurs fois inutilement.
 
-## Fonctionnalités
+### **Fonctionnalités principales :**
 
-1. **Ajout de mots** : 
-   - Permet d'ajouter de nouveaux mots dans le dictionnaire, y compris leur forme traditionnelle, simplifiée, pinyin et traductions.
-   
-2. **Recherche de mots** : 
-   - Permet de rechercher un mot ou caractère dans le dictionnaire en utilisant sa forme traditionnelle, et d'afficher ses informations détaillées telles que le pinyin, les traductions et les formes simplifiées.
-   
-3. **Affichage du pinyin, de la forme simplifiée ou traditionnelle** :
-   - Affiche le pinyin, la forme simplifiée ou traditionnelle pour un caractère chinois donné.
-   
-4. **Sauvegarde des données** :
-   - Sauvegarde automatiquement les données dans le fichier `cfdict.xml` pour une persistance des informations ajoutées.
-   
-5. **Aide et Commandes** :
-   - Offre une fonctionnalité d'aide pour afficher les commandes disponibles et leur usage.
+1. **Chargement initial des données :**
+   - La méthode `GetDocument()` charge le fichier XML situé dans `./Data/cfdict.xml` lors du premier appel.
+   - Si le document est déjà chargé, il renvoie la version mise en cache pour éviter des lectures répétées sur disque.
 
-## Commandes disponibles et leurs usages
+2. **Actualisation des données :**
+   - La méthode `RefreshDocument()` recharge le fichier XML depuis le disque, utile si le fichier a été modifié ou mis à jour pendant l'exécution du programme.
 
-### 1. **Ajouter un mot dans le dictionnaire** : `add`
-Ajoutez un nouveau mot dans le dictionnaire en suivant ces étapes :
-1. Entrez la commande `add`.
-2. Suivez les instructions :
-   - Saisissez la **forme traditionnelle** du caractère.
-   - Saisissez la **forme simplifiée** du caractère.
-   - Saisissez la **traduction** du caractère (si plusieurs traductions existent, séparez-les par une virgule `,`).
-3. Une fois le caractère enregistré, un aperçu sera affiché, et un numéro sera automatiquement attribué par le dictionnaire.
+**Exemple d'utilisation dans une commande (`GetPinyinCommand`) :**
+```csharp
+var doc = XmlCache.GetDocument();
+var result = doc.Descendants("word")
+    .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase))
+    .Select(w => w.Element("py")?.Value);
+---
 
-### 2. **Quitter l'application** : `exit`
-- Entrez simplement `exit` pour fermer l'application.
+## **Commandes disponibles et leurs usages**
 
-### 3. **Afficher les commandes disponibles** : `help`
-- Tapez `help` pour afficher la liste des commandes et leur utilisation.
+Voici une liste détaillée de toutes les commandes disponibles dans l'application.
 
-### 4. **Afficher le pinyin d’un caractère chinois** : `getpinyin`
-1. Tapez `getpinyin` suivi d'un espace.
-2. Ajoutez le caractère chinois dont vous souhaitez obtenir le pinyin.
-   
-   **Exemple :** `getpinyin 你`
+### **1. Ajouter un mot dans le dictionnaire** : `add`
+Ajoutez un nouveau mot dans le dictionnaire.
 
-### 5. **Afficher la forme simplifiée d’un caractère chinois** : `getsimplified`
-1. Tapez `getsimplified` suivi d'un espace.
-2. Ajoutez le caractère chinois dont vous souhaitez obtenir la forme simplifiée.
-   
-   **Exemple :** `getsimplified 你`
+**Exemple :**
+```plaintext
+> add
+Entrez la forme traditionnelle : 妳
+Entrez la forme simplifiée : 你
+Entrez le pinyin : nǐ
+Entrez les traductions (séparées par une virgule) : tu, vous
+Mot ajouté : 妳 (你) - Pinyin : nǐ - Traductions : tu, vous
+```
 
-### 6. **Afficher la forme traditionnelle d’un caractère chinois** : `gettraditional`
-1. Tapez `gettraditional` suivi d'un espace.
-2. Ajoutez le caractère chinois dont vous souhaitez obtenir la forme traditionnelle.
-   
-   **Exemple :** `gettraditional 你`
+### **2. Quitter l'application** : `exit`
+Fermez l'application proprement.
 
-### 7. **Sauvegarder les données du dictionnaire** : `save`
-1. Tapez la commande `save`.
-2. Appuyez sur la touche `Entrée`.
-3. L’application vous demandera de :
-   - Choisir le caractère à enregistrer.
-   - Spécifier le format du fichier (par exemple : `.txt`, `.json`, `.xml`, ).
+**Exemple :**
+```plaintext
+> exit
+Au revoir !
+```
 
-### 8. **Afficher la traduction d’un caractère chinois** : `gettranslation`
-1. Tapez `gettranslation` suivi d'un espace.
-2. Ajoutez le caractère chinois dont vous souhaitez obtenir la traduction.
-   
-   **Exemple :** `gettranslation 你`
+### **3. Afficher les commandes disponibles** : `help`
+Affiche la liste complète des commandes disponibles.
 
-### 9. **Rechercher un mot ou un caractère** : `search`
-1. Tapez `search` suivi d'un espace.
-2. Ajoutez le mot ou le caractère chinois à rechercher.
-3. Le dictionnaire affichera toutes les informations relatives à ce mot ou caractère.
-   
-   **Exemple :** `search 你`
+**Exemple :**
+```plaintext
+> help
+--- Commandes disponibles ---
+1. help                         - Affiche cette liste d'aide.
+2. exit                         - Quitte le programme.
+...
+```
 
-### 10. **Annuler la dernière recherche effectuée** : `undo`
-- Tapez simplement `undo` pour retirer le dernier mot ajouté à l’historique des recherches.
+### **4. Afficher le pinyin d’un caractère chinois** : `getpinyin`
+Affiche le pinyin d’un caractère.
 
-### 11. **Afficher l’historique des recherches** : `history`
-- Tapez `history` pour afficher la liste des mots recherchés précédemment avec leur index.
+**Exemple :**
+```plaintext
+> getpinyin 妳
+Le pinyin de 妳 est : nǐ
+```
 
-### Prérequis
-.NET 6.0 ou supérieur : Le projet utilise le framework .NET.
+### **5. Sauvegarder les données du dictionnaire** : `save`
+Sauvegarde les données dans un fichier.
 
-Visual Studio ou autre IDE C# pour le développement et l'exécution de l'application.
+**Exemple :**
+```plaintext
+> save
+Entrez le mot que vous souhaitez enregistrer : 妳
+Quel format voulez-vous utiliser pour enregistrer ? (xml, txt, json) : json
+Résultats sauvegardés dans 妳_result.json
+```
 
-### Instructions d'utilisation
+### **6. Changer la langue** : `changelanguage`
+Permet de basculer entre le français et l'anglais.
 
-1. **Cloner le repository** :
+**Exemple :**
+```plaintext
+> changelanguage en
+Language switched to: English.
+Help messages will now be displayed in English.
+```
 
- git clone https://github.com/votre-utilisateur/ChineseDictionary.git
+---
 
-2. **Compilation et exécution** :
-Ouvrir le projet dans Visual Studio ou tout autre IDE C#.
+## **Prérequis techniques**
 
-Compiler et exécuter l'application en mode console. A l'aide de la commande : dotnet run
+1. **Environnement :**
+   - .NET 6.0 ou supérieur.
+   - Visual Studio ou tout IDE compatible avec C#.
 
-2. **Interaction avec l'application** :
+2. **Installation :**
+   - Clonez le projet :  
+     ```bash
+     git clone https://github.com/votre-utilisateur/ChineseDictionary.git
+     ```
+   - Naviguez dans le répertoire cloné et lancez l'application :  
+     ```bash
+     dotnet build
+     dotnet run
+     ```
 
-Une fois l'application lancée, vous pouvez entrer une commande, comme add, search, ou help, pour interagir avec le dictionnaire.
+---
 
-Suivez les instructions à l'écran pour ajouter des mots, rechercher des mots, ou obtenir des informations spécifiques sur un caractère.
-
-### Auteur
-
+## **Auteur**
 Léa MANET
-
-
-
-
-
-
-

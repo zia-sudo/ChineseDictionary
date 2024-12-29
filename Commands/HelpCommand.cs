@@ -39,8 +39,7 @@ namespace ChineseDictionary
                 Console.WriteLine("9. add                          - Ajoute un nouveau mot dans le dictionnaire.");
                 Console.WriteLine("10. undo                        - Annule la dernière recherche effectuée.");
                 Console.WriteLine("11. history                     - Affiche l'historique des recherches effectuées.");
-                Console.WriteLine("12. load <chemin>               - Charge un fichier texte ou CSV.");
-                Console.WriteLine("13. changelanguage <langue>     - Change la langue ('fr' ou 'en').");
+                Console.WriteLine("12. changelanguage <langue>     - Change la langue ('fr' ou 'en').");
 
                 Console.WriteLine("\n--- Instructions supplémentaires ---");
                 Console.WriteLine("Lorsque vous entrez une commande nécessitant un mot, comme 'getpinyin', 'gettranslation', etc.,");
@@ -62,8 +61,7 @@ namespace ChineseDictionary
                 Console.WriteLine("9. add                          - Adds a new word to the dictionary.");
                 Console.WriteLine("10. undo                        - Cancels the last performed search.");
                 Console.WriteLine("11. history                     - Displays the search history.");
-                Console.WriteLine("12. load <path>                 - Loads a text or CSV file.");
-                Console.WriteLine("13. changelanguage <language>   - Switches the language ('fr' or 'en').");
+                Console.WriteLine("12. changelanguage <language>   - Switches the language ('fr' or 'en').");
 
                 Console.WriteLine("\n--- Additional Instructions ---");
                 Console.WriteLine("When using a command that requires a word, like 'getpinyin' or 'gettranslation',");

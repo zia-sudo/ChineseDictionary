@@ -43,17 +43,6 @@ namespace ChineseDictionary
                         }
                         break;
 
-                    case "load":
-                        if (!string.IsNullOrWhiteSpace(argument))
-                        {
-                            new LoadCommand().Execute(argument);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Veuillez fournir le chemin du fichier à charger.");
-                        }
-                        break;
-
                     case "getpinyin":
                     case "getsimplified":
                     case "gettraditional":
