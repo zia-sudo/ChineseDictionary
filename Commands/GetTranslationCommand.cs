@@ -7,18 +7,32 @@ namespace ChineseDictionary
     {
         public void Execute(string word)
         {
+            // Vérification de l'entrée utilisateur
+            if (string.IsNullOrWhiteSpace(word))
+            {
+                Console.WriteLine("Veuillez entrer un mot valide.");
+                return;
+            }
+
+            // Normalisation du mot
+            word = word.Trim();
+
+            // Charger le document XML via XmlCache
             var doc = XmlCache.GetDocument();
 
-            var result = from w in doc.Descendants("word")
-                         where w.Element("trad")?.Value.Equals(word, StringComparison.OrdinalIgnoreCase) == true ||
-                               w.Element("simp")?.Value.Equals(word, StringComparison.OrdinalIgnoreCase) == true ||
-                               w.Element("py")?.Value.Contains(word, StringComparison.OrdinalIgnoreCase) == true
-                         select w;
+            // Requête LINQ pour trouver le mot correspondant
+            var result = doc.Descendants("word")
+                .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                         || w.Element("py")?.Value.Contains(word, StringComparison.OrdinalIgnoreCase) == true)
+                .Select(w => w);
 
+            // Récupérer le premier résultat trouvé
             var wordEntry = result.FirstOrDefault();
 
             if (wordEntry != null)
             {
+                // Récupérer les traductions
                 var translations = wordEntry.Element("trans")?.Elements("fr");
                 if (translations != null && translations.Any())
                 {

@@ -13,18 +13,24 @@ namespace ChineseDictionary
                 return;
             }
 
+            // Normalisation de l'entrée utilisateur
             word = word.Trim();
+
+            // Accéder au document XML via XmlCache
             var doc = XmlCache.GetDocument();
 
-            var result = from w in doc.Descendants("word")
-                         where string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
-                            || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
-                         select w.Element("py")?.Value;
+            // Requête LINQ pour trouver le pinyin
+            var result = doc.Descendants("word")
+                .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase))
+                .Select(w => w.Element("py")?.Value);
 
+            // Obtenir le premier résultat
             var pinyin = result.FirstOrDefault();
 
             if (pinyin != null)
             {
+                // S'assurer que la sortie gère correctement les caractères chinois
                 Console.OutputEncoding = System.Text.Encoding.UTF8;
                 Console.WriteLine($"Le pinyin de {word} est : {pinyin}");
             }

@@ -10,6 +10,7 @@ namespace ChineseDictionary
     {
         public void Execute()
         {
+            // Demander le mot à enregistrer
             Console.Write("Entrez le mot que vous souhaitez enregistrer : ");
             string? word = Console.ReadLine()?.Trim();
 
@@ -19,20 +20,24 @@ namespace ChineseDictionary
                 return;
             }
 
+            // Charger le document XML via XmlCache
             var doc = XmlCache.GetDocument();
 
-            // Rechercher les informations dans le fichier XML
-            var result = from w in doc.Descendants("word")
-                         where w.Element("trad")?.Value == word || w.Element("simp")?.Value == word
-                         select new
-                         {
-                             Traditional = w.Element("trad")?.Value,
-                             Simplified = w.Element("simp")?.Value,
-                             Pinyin = w.Element("py")?.Value,
-                             Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList()
-                         };
+            // Requête LINQ pour trouver le mot
+            var exactMatch = doc.Descendants("word")
+                .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(w.Element("py")?.Value, word, StringComparison.OrdinalIgnoreCase))
+                .Select(w => new
+                {
+                    Traditional = w.Element("trad")?.Value,
+                    Simplified = w.Element("simp")?.Value,
+                    Pinyin = w.Element("py")?.Value,
+                    Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList()
+                });
 
-            var data = result.FirstOrDefault();
+            // Récupérer le premier résultat
+            var data = exactMatch.FirstOrDefault();
 
             if (data != null)
             {
@@ -43,6 +48,7 @@ namespace ChineseDictionary
 
                 if (fileType == "xml")
                 {
+                    // Sauvegarder au format XML
                     XElement element = new XElement("word",
                         new XElement("trad", data.Traditional),
                         new XElement("simp", data.Simplified),
@@ -58,6 +64,7 @@ namespace ChineseDictionary
                 }
                 else if (fileType == "txt")
                 {
+                    // Sauvegarder au format TXT
                     filePath = $"{word}_result.txt";
                     using (StreamWriter writer = new StreamWriter(filePath))
                     {
@@ -75,6 +82,7 @@ namespace ChineseDictionary
                 }
                 else if (fileType == "json")
                 {
+                    // Sauvegarder au format JSON
                     filePath = $"{word}_result.json";
                     var jsonData = new
                     {
