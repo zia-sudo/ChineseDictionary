@@ -1,15 +1,15 @@
+#nullable enable
 using System;
 
 namespace ChineseDictionary
 {
     public class CommandInterpreter
     {
-        private readonly HistoryStack historyStack = new HistoryStack(); // Gestion de l'historique
-        private readonly HelpCommand helpCommand = new HelpCommand();   // Commande d'aide
+        private readonly HistoryStack historyStack = new HistoryStack();
+        private readonly HelpCommand helpCommand = new HelpCommand(); // Instance de HelpCommand
 
         public bool Interpret(string input)
         {
-            // Séparer la commande et ses arguments
             string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             if (parts.Length == 0)
@@ -18,12 +18,12 @@ namespace ChineseDictionary
                 return false;
             }
 
-            string command = parts[0]; // Nom de la commande
-            string argument = parts.Length > 1 ? parts[1] : string.Empty; // Argument fourni
+            string command = parts[0].ToLower();
+            string argument = parts.Length > 1 ? parts[1] : string.Empty;
 
             try
             {
-                switch (command.ToLower())
+                switch (command)
                 {
                     case "help":
                         helpCommand.Execute();
@@ -32,26 +32,65 @@ namespace ChineseDictionary
                     case "exit":
                         return true;
 
-                    case "changelanguage":
+                    case "getpinyin":
                         if (!string.IsNullOrWhiteSpace(argument))
                         {
-                            new ChangeLanguageCommand(helpCommand).Execute(argument);
+                            ExecuteCommandWithHistory(new GetPinyinCommand(), argument);
                         }
                         else
                         {
-                            Console.WriteLine("Veuillez fournir une langue valide ('fr' ou 'en').");
+                            Console.WriteLine("Veuillez fournir un mot valide.");
                         }
                         break;
 
-                    case "getpinyin":
                     case "getsimplified":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            ExecuteCommandWithHistory(new GetSimplifiedCommand(), argument);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir un mot valide.");
+                        }
+                        break;
+
                     case "gettraditional":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            ExecuteCommandWithHistory(new GetTraditionalCommand(), argument);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir un mot valide.");
+                        }
+                        break;
+
                     case "gettranslation":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            ExecuteCommandWithHistory(new GetTranslationCommand(), argument);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir un mot valide.");
+                        }
+                        break;
+
                     case "search":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            ExecuteCommandWithHistory(new SearchCommand(), argument);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir un mot valide.");
+                        }
+                        break;
+
                     case "remove":
                         if (!string.IsNullOrWhiteSpace(argument))
                         {
-                            ExecuteCommandWithHistory(command, argument);
+                            ExecuteCommandWithHistory(new RemoveCommand(), argument);
                         }
                         else
                         {
@@ -68,57 +107,71 @@ namespace ChineseDictionary
                         break;
 
                     case "undo":
-                        Console.WriteLine(historyStack.UndoLastSearch() ?? "Aucune recherche précédente à annuler.");
+                        string? undoneSearch = historyStack.UndoLastSearch();
+                        if (undoneSearch != null)
+                        {
+                            Console.WriteLine($"Recherche annulée avec succès : {undoneSearch}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aucune recherche précédente à annuler.");
+                        }
                         break;
 
                     case "history":
                         historyStack.ShowHistory();
                         break;
 
+                    case "changelanguage":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            new ChangeLanguageCommand(helpCommand).Execute(argument); // Passe l'instance de HelpCommand
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir une langue valide ('fr' ou 'en').");
+                        }
+                        break;
+
                     default:
-                        throw new InvalidCommandException(command); // Lever une exception pour commande inconnue
+                        Console.WriteLine($"Commande inconnue : {command}. Tapez 'help' pour voir la liste des commandes.");
+                        break;
                 }
-            }
-            catch (InvalidCommandException ex)
-            {
-                // Gérer l'exception pour commande inconnue
-                Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
             {
-                // Gérer toutes les autres exceptions inattendues
                 Console.WriteLine($"Erreur inattendue : {ex.Message}");
             }
 
             return false;
         }
 
-        private void ExecuteCommandWithHistory(string command, string argument)
+        private void ExecuteCommandWithHistory(object command, string argument)
         {
-            switch (command.ToLower())
+            switch (command)
             {
-                case "getpinyin":
-                    new GetPinyinCommand().Execute(argument);
+                case GetPinyinCommand pinyinCommand:
+                    pinyinCommand.Execute(argument);
                     break;
 
-                case "getsimplified":
-                    new GetSimplifiedCommand().Execute(argument);
+                case GetSimplifiedCommand simplifiedCommand:
+                    simplifiedCommand.Execute(argument);
                     break;
 
-                case "gettraditional":
-                    new GetTraditionalCommand().Execute(argument);
+                case GetTraditionalCommand traditionalCommand:
+                    traditionalCommand.Execute(argument);
                     break;
 
-                case "gettranslation":
-                    new GetTranslationCommand().Execute(argument);
+                case GetTranslationCommand translationCommand:
+                    translationCommand.Execute(argument);
                     break;
 
-                case "search":
-                    new SearchCommand().Execute(argument);
+                case SearchCommand searchCommand:
+                    searchCommand.Execute(argument);
                     break;
 
-                case "remove":
-                    new RemoveCommand().Execute(argument);
+                case RemoveCommand removeCommand:
+                    removeCommand.Execute(argument);
                     break;
 
                 default:
@@ -126,7 +179,7 @@ namespace ChineseDictionary
                     return;
             }
 
-            historyStack.AddToHistory(argument); // Ajouter à l'historique
+            historyStack.AddToHistory(argument);
         }
     }
 }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.IO;
 using System.Linq;
@@ -23,83 +24,80 @@ namespace ChineseDictionary
 
             var exactMatch = doc.Descendants("word")
                 .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase)
-                         || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
-                         || string.Equals(w.Element("py")?.Value, word, StringComparison.OrdinalIgnoreCase))
+                    || string.Equals(w.Element("simp")?.Value, word, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(w.Element("py")?.Value, word, StringComparison.OrdinalIgnoreCase))
                 .Select(w => new
                 {
-                    Traditional = w.Element("trad")?.Value ?? "N/A",
-                    Simplified = w.Element("simp")?.Value ?? "N/A",
-                    Pinyin = w.Element("py")?.Value ?? "N/A",
+                    Traditional = w.Element("trad")?.Value ?? "Inconnu",
+                    Simplified = w.Element("simp")?.Value ?? "Inconnu",
+                    Pinyin = w.Element("py")?.Value ?? "Inconnu",
                     Translations = w.Element("trans")?.Elements("fr").Select(t => t.Value).ToList() ?? new List<string>()
                 });
 
             var data = exactMatch.FirstOrDefault();
 
-            if (data != null)
+            if (data == null)
             {
-                Console.Write("Quel format voulez-vous utiliser pour enregistrer ? (xml, txt, json) : ");
-                string? fileType = Console.ReadLine()?.Trim().ToLower();
+                Console.WriteLine("Aucune information trouvée pour ce mot.");
+                return;
+            }
 
-                string filePath;
+            Console.Write("Quel format voulez-vous utiliser pour enregistrer ? (xml, txt, json) : ");
+            string? fileType = Console.ReadLine()?.Trim().ToLower();
 
-                if (fileType == "xml")
-                {
-                    XElement element = new XElement("word",
+            if (string.IsNullOrEmpty(fileType))
+            {
+                Console.WriteLine("Format non spécifié.");
+                return;
+            }
+
+            string filePath;
+
+            switch (fileType)
+            {
+                case "xml":
+                    filePath = $"{word}_result.xml";
+                    var element = new XElement("word",
                         new XElement("trad", data.Traditional),
                         new XElement("simp", data.Simplified),
                         new XElement("py", data.Pinyin),
                         new XElement("trans", data.Translations.Select(t => new XElement("fr", t)))
                     );
+                    var docXml = new XDocument(new XElement("words", element));
+                    docXml.Save(filePath);
+                    break;
 
-                    filePath = $"{word}_result.xml";
-                    XElement root = new XElement("words", element);
-                    XDocument newDoc = new XDocument(root);
-                    newDoc.Save(filePath);
-                    Console.WriteLine($"Résultats sauvegardés dans {filePath}");
-                }
-                else if (fileType == "txt")
-                {
+                case "txt":
                     filePath = $"{word}_result.txt";
-                    using (StreamWriter writer = new StreamWriter(filePath))
+                    File.WriteAllLines(filePath, new[]
                     {
-                        writer.WriteLine($"Informations pour le mot : {word}");
-                        writer.WriteLine($"Forme Traditionnelle : {data.Traditional}");
-                        writer.WriteLine($"Forme Simplifiée : {data.Simplified}");
-                        writer.WriteLine($"Pinyin : {data.Pinyin}");
-                        writer.WriteLine("Traductions : ");
-                        foreach (var translation in data.Translations)
-                        {
-                            writer.WriteLine($"  - {translation}");
-                        }
-                    }
-                    Console.WriteLine($"Résultats sauvegardés dans {filePath}");
-                }
-                else if (fileType == "json")
-                {
+                        $"Mot : {word}",
+                        $"Forme traditionnelle : {data.Traditional}",
+                        $"Forme simplifiée : {data.Simplified}",
+                        $"Pinyin : {data.Pinyin}",
+                        "Traductions :",
+                    }.Concat(data.Translations.Select(t => $"- {t}")));
+                    break;
+
+                case "json":
                     filePath = $"{word}_result.json";
                     var jsonData = new
                     {
-                        Traditional = data.Traditional,
-                        Simplified = data.Simplified,
-                        Pinyin = data.Pinyin,
-                        Translations = data.Translations
+                        data.Traditional,
+                        data.Simplified,
+                        data.Pinyin,
+                        data.Translations
                     };
-
                     File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
-                    Console.WriteLine($"Résultats sauvegardés dans {filePath}");
-                }
-                else
-                {
+                    break;
+
+                default:
                     Console.WriteLine("Format non supporté. Veuillez choisir entre 'xml', 'txt' ou 'json'.");
                     return;
-                }
+            }
 
-                XmlCache.RefreshDocument();
-            }
-            else
-            {
-                Console.WriteLine("Aucune information trouvée pour ce mot.");
-            }
+            Console.WriteLine($"Résultats sauvegardés dans {filePath}");
+            XmlCache.RefreshDocument();
         }
     }
 }
