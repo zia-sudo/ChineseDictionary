@@ -116,7 +116,7 @@ Ajoutez un nouveau mot dans le dictionnaire en suivant ces étapes :
 - Tapez `history` pour afficher la liste des mots recherchés précédemment avec leur index.
 
 ### Prérequis
-.NET 5.0 ou supérieur : Le projet utilise le framework .NET.
+.NET 6.0 ou supérieur : Le projet utilise le framework .NET.
 
 Visual Studio ou autre IDE C# pour le développement et l'exécution de l'application.
 

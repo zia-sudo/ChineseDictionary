@@ -8,10 +8,8 @@ namespace ChineseDictionary
 {
     public class SaveCommand
     {
-        // Méthode exécutant la commande de sauvegarde des informations du mot
         public void Execute()
         {
-            // Demander à l'utilisateur quel mot il souhaite enregistrer
             Console.Write("Entrez le mot que vous souhaitez enregistrer : ");
             string? word = Console.ReadLine()?.Trim();
 
@@ -21,10 +19,9 @@ namespace ChineseDictionary
                 return;
             }
 
-            // Charger le fichier XML avec les données des mots
-            XDocument doc = XDocument.Load("./Data/cfdict.xml");
+            var doc = XmlCache.GetDocument();
 
-            // Rechercher les informations du mot dans le fichier XML
+            // Rechercher les informations dans le fichier XML
             var result = from w in doc.Descendants("word")
                          where w.Element("trad")?.Value == word || w.Element("simp")?.Value == word
                          select new
@@ -37,7 +34,6 @@ namespace ChineseDictionary
 
             var data = result.FirstOrDefault();
 
-            // Si les données existent pour le mot, demander le format et sauvegarder
             if (data != null)
             {
                 Console.Write("Quel format voulez-vous utiliser pour enregistrer ? (xml, txt, json) : ");
@@ -47,7 +43,6 @@ namespace ChineseDictionary
 
                 if (fileType == "xml")
                 {
-                    // Sauvegarder au format XML
                     XElement element = new XElement("word",
                         new XElement("trad", data.Traditional),
                         new XElement("simp", data.Simplified),
@@ -63,7 +58,6 @@ namespace ChineseDictionary
                 }
                 else if (fileType == "txt")
                 {
-                    // Sauvegarder au format TXT
                     filePath = $"{word}_result.txt";
                     using (StreamWriter writer = new StreamWriter(filePath))
                     {
@@ -81,7 +75,6 @@ namespace ChineseDictionary
                 }
                 else if (fileType == "json")
                 {
-                    // Sauvegarder au format JSON
                     filePath = $"{word}_result.json";
                     var jsonData = new
                     {
@@ -97,11 +90,14 @@ namespace ChineseDictionary
                 else
                 {
                     Console.WriteLine("Format non supporté. Veuillez choisir entre 'xml', 'txt' ou 'json'.");
+                    return;
                 }
+
+                // Rafraîchir le cache XML après la sauvegarde
+                XmlCache.RefreshDocument();
             }
             else
             {
-                // Si le mot n'est pas trouvé dans le fichier
                 Console.WriteLine("Aucune information trouvée pour ce mot.");
             }
         }
