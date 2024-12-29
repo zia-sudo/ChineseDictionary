@@ -140,6 +140,17 @@ namespace ChineseDictionary
                         }
                         break;
 
+                    case "load":
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            new LoadCommand().Execute(argument);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Veuillez fournir le chemin du fichier à charger.");
+                        }
+                        break;
+
                     default:
                         Console.WriteLine($"Commande inconnue : {command}. Tapez 'help' pour voir la liste des commandes.");
                         break;

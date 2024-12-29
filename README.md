@@ -6,6 +6,8 @@
 - L'ajout de nouvelles entrées au dictionnaire.
 - La sauvegarde des données dans divers formats.
 - La gestion multilingue (français et anglais) pour les commandes.
+- L'importations des mots à partir de fichiers CSV ou texte puis l'enregistrer dans le fichier xml principal.
+
 
 Ce projet a été réalisé dans le cadre du cours de Programmation Orientée Objet en C# au premier semestre de Master 2.
 
@@ -25,11 +27,10 @@ Ce dossier contient les classes responsables de l'exécution des différentes co
 - **`GetTranslationCommand.cs`** : Affiche la traduction française d'un caractère ou mot chinois.
 - **`SearchCommand.cs`** : Recherche un caractère ou mot chinois dans le dictionnaire.
 - **`SaveCommand.cs`** : Sauvegarde les résultats dans un fichier (formats disponibles : JSON, TXT, XML).
+- **`LoadCommand.cs`** : Permet de charger des mots à partir d'un fichier CSV ou texte enregistré dans le dossier Data.
 - **`ChangeLanguageCommand.cs`** : Permet de basculer entre les langues disponibles (français/anglais).
-- **`InvalidCommandException.cs`** : Exception personnalisée pour gérer les commandes inconnues et afficher un message clair à l'utilisateur.  
-  **Exemple :** Lorsque l'utilisateur entre une commande invalide, un message tel que `La commande 'random' est inconnue. Tapez 'help' pour afficher les commandes disponibles.` s'affiche.
-- **`XmlCache.cs`** : Gère le chargement et la mise en cache des données du dictionnaire à partir du fichier XML principal.  
-  Voir la section dédiée pour plus de détails.
+- **`InvalidCommandException.cs`** : Gère les commandes inconnues avec des messages explicatifs.
+- **`XmlCache.cs`** : Gère le chargement et la mise en cache du fichier XML principal contenant les données.
 
 ### **2. Dossier `Pile`**
 Ce dossier contient la gestion de l'historique des recherches via la classe `HistoryStack`. Les fonctionnalités incluent :
@@ -37,9 +38,11 @@ Ce dossier contient la gestion de l'historique des recherches via la classe `His
 - **Récupérer le dernier mot recherché** : `GetLastSearch()`.
 - **Annuler la dernière recherche** : `UndoLastSearch()`.
 - **Afficher l'historique complet** : `ShowHistory()`.
+- **Afficher un mot spécifique par index** : `ShowSpecificHistory(int index)`.
 
 ### **3. Dossier `Data`**
 - **`cfdict.xml`** : Le fichier principal contenant les données du dictionnaire (mots, pinyin, formes simplifiées/traditionnelles, traductions).
+- - **`words.csv`** : Fichier d'exemple pour tester l'importation de données via la commande load.
 
 ### **4. Dossier `Main`**
 - **`Program.cs`** : Point d'entrée principal de l'application. C'est ici que l'exécution commence.
@@ -65,6 +68,7 @@ Voici une liste détaillée de toutes les commandes disponibles dans l'applicati
 
 ### **1. Ajouter un mot dans le dictionnaire** : `add`
 Ajoutez un nouveau mot dans le dictionnaire.
+Créer automatiquement une sauvegarde avant modification `cfdict_backup.xml`
 
 **Exemple :**
 ```plaintext
@@ -183,7 +187,7 @@ Supprime la dernière recherche effectuée de l'historique.
 Recherche annulée avec succès : 妳
 ```
 
-### **11. Afficher l’historique des recherches** : `history`
+### **12. Afficher l’historique des recherches** : `history`
 Affiche la liste des mots précédemment recherchés dans l'ordre chronologique.
 Affiche un mot spécifique en fonction de l'index fourni. `history 1`
 
@@ -198,7 +202,28 @@ Historique des recherches :
 
 > history 1
 Mot #1 dans l'historique : 张家界
+```
+### **13. Annuler la dernière recherche effectuée** : `undo`
+Supprime la dernière recherche effectuée de l'historique.
 
+**Exemple :**
+```plaintext
+> undo
+Recherche annulée avec succès : 妳
+```
+
+### **14. Importer des mots depuis un fichier CSV/TXT** : `load`
+Ajoute les mots depuis un fichier (CSV ou TXT) dans le dictionnaire principal.
+Il faut vous assurer que le fichier txt ou csv soit bien enregistrer dans le dossier Data.
+
+**Exemple :**
+```plaintext
+> load words.csv
+Chemin absolu interprété : /home/zia/Téléchargements/M2_S1/ChineseDictionary/Data/words.csv
+Chargement du fichier : /home/zia/Téléchargements/M2_S1/ChineseDictionary/Data/words.csv
+Veuillez entrer le délimiteur utilisé dans le fichier (par défaut ',') : ,
+Voulez-vous sauvegarder ces données dans le dictionnaire principal ? (y/n) : y
+Mots sauvegardés dans cfdict.xml avec succès !
 ```
 ---
 

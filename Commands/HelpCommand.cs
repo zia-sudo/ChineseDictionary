@@ -41,6 +41,8 @@ namespace ChineseDictionary
                 Console.WriteLine("10. undo                        - Annule la dernière recherche effectuée.");
                 Console.WriteLine("11. history [index]             - Affiche l'historique ou un mot spécifique par son index.");
                 Console.WriteLine("12. changelanguage <langue>     - Change la langue ('fr' ou 'en').");
+                Console.WriteLine("13. load <chemin>               - Charge des mots à partir d'un fichier texte ou CSV dans le dossier Data.");
+
 
                 Console.WriteLine("\n--- Instructions supplémentaires ---");
                 Console.WriteLine("Lorsque vous entrez une commande nécessitant un mot, comme 'getpinyin', 'gettranslation', etc.,");
@@ -64,6 +66,8 @@ namespace ChineseDictionary
                 Console.WriteLine("10. undo                        - Cancels the last performed search.");
                 Console.WriteLine("11. history [index]             - Displays the search history or a specific word by index.");
                 Console.WriteLine("12. changelanguage <language>   - Switches the language ('fr' or 'en').");
+                Console.WriteLine("13. load <path>                 - Loads words from a text or CSV file in Data.");
+
 
                 Console.WriteLine("\n--- Additional Instructions ---");
                 Console.WriteLine("When using a command that requires a word, like 'getpinyin' or 'gettranslation',");
