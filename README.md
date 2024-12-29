@@ -59,14 +59,6 @@ La classe **`XmlCache`** est responsable de la gestion du fichier XML principal 
 2. **Actualisation des données :**
    - La méthode `RefreshDocument()` recharge le fichier XML depuis le disque, utile si le fichier a été modifié ou mis à jour pendant l'exécution du programme.
 
-**Exemple d'utilisation dans une commande (`GetPinyinCommand`) :**
-```csharp
-var doc = XmlCache.GetDocument();
-var result = doc.Descendants("word")
-    .Where(w => string.Equals(w.Element("trad")?.Value, word, StringComparison.OrdinalIgnoreCase))
-    .Select(w => w.Element("py")?.Value);
----
-
 ## **Commandes disponibles et leurs usages**
 
 Voici une liste détaillée de toutes les commandes disponibles dans l'application.
@@ -126,7 +118,7 @@ Résultats sauvegardés dans 妳_result.json
 ```
 
 ### **6. Changer la langue** : `changelanguage`
-Permet de basculer entre le français et l'anglais.
+Permet de basculer entre le français et l'anglais pour 'help'.
 
 **Exemple :**
 ```plaintext
@@ -135,6 +127,64 @@ Language switched to: English.
 Help messages will now be displayed in English.
 ```
 
+### **7. Supprimer un mot** : `remove`
+Permet de supprimer un mot choisi par l'utilisateur dans le fichier xml.
+
+**Exemple :**
+```plaintext
+> remove 肉夹馍
+Le mot '肉夹馍' a été trouvé et sera supprimé.
+Le mot a été supprimé avec succès.
+```
+
+### **8. Afficher le caractère simplifié d’un caractère chinois tradictionnel** : `getsimplified`
+Affiche le caractère simplifié d’un caractère chinois tradictionnel.
+
+**Exemple :**
+```plaintext
+> getsimplified 張家界
+La forme simplifiée de 張家界 est : 张家界
+```
+
+### **9. Afficher la forme traditionnelle d’un caractère chinois simplifié** : `gettraditional`
+Affiche le caractère traditionnel d’un caractère chinois simplifié.
+
+**Exemple :**
+```plaintext
+> gettraditional 张家界
+La forme traditionnelle de 张家界 est : 張家界
+```
+
+### **10. Afficher la traduction d’un caractère chinois** : `gettranslation`
+Affiche la traduction en français d’un caractère chinois simplifié ou traditionnel.
+
+**Exemple :**
+```plaintext
+> gettranslation 张家界
+Traductions pour 张家界 :
+- ville de Zhangjiajie
+```
+
+### **11. Annuler la dernière recherche effectuée** : `undo`
+Supprime la dernière recherche effectuée de l'historique.
+
+**Exemple :**
+```plaintext
+> undo
+Recherche annulée avec succès : 妳
+```
+
+### **11. Afficher l’historique des recherches** : `history`
+Affiche la liste des mots précédemment recherchés dans l'ordre chronologique.
+
+**Exemple :**
+```plaintext
+> history
+Historique des recherches :
+1. 你好
+2. 妳
+3. 张家界
+```
 ---
 
 ## **Prérequis techniques**
@@ -146,7 +196,7 @@ Help messages will now be displayed in English.
 2. **Installation :**
    - Clonez le projet :  
      ```bash
-     git clone https://github.com/votre-utilisateur/ChineseDictionary.git
+     git clone https://github.com/zia-sudo/ChineseDictionary
      ```
    - Naviguez dans le répertoire cloné et lancez l'application :  
      ```bash
