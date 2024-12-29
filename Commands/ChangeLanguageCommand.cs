@@ -50,5 +50,12 @@ namespace ChineseDictionary
                     return false;
             }
         }
+
+        // Énumération pour représenter les langues
+        private enum Language
+        {
+            French,
+            English
+        }
     }
 }
