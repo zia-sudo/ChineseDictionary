@@ -185,6 +185,7 @@ Recherche annulée avec succès : 妳
 
 ### **11. Afficher l’historique des recherches** : `history`
 Affiche la liste des mots précédemment recherchés dans l'ordre chronologique.
+Affiche un mot spécifique en fonction de l'index fourni.
 
 **Exemple :**
 ```plaintext
@@ -193,6 +194,11 @@ Historique des recherches :
 1. 你好
 2. 妳
 3. 张家界
+
+
+> history 1
+Mot #1 dans l'historique : 张家界
+
 ```
 ---
 

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 
 namespace ChineseDictionary
@@ -38,14 +39,15 @@ namespace ChineseDictionary
                 Console.WriteLine("8. save                         - Sauvegarde les résultats de recherche dans un fichier XML, JSON, TXT.");
                 Console.WriteLine("9. add                          - Ajoute un nouveau mot dans le dictionnaire.");
                 Console.WriteLine("10. undo                        - Annule la dernière recherche effectuée.");
-                Console.WriteLine("11. history                     - Affiche l'historique des recherches effectuées.");
+                Console.WriteLine("11. history [index]             - Affiche l'historique ou un mot spécifique par son index.");
                 Console.WriteLine("12. changelanguage <langue>     - Change la langue ('fr' ou 'en').");
 
                 Console.WriteLine("\n--- Instructions supplémentaires ---");
                 Console.WriteLine("Lorsque vous entrez une commande nécessitant un mot, comme 'getpinyin', 'gettranslation', etc.,");
                 Console.WriteLine("vous devrez entrer un mot chinois que vous souhaitez rechercher.");
                 Console.WriteLine("Par exemple : 'getpinyin' suivi d'un mot chinois comme '你好'.");
-                Console.WriteLine("\nTapez 'exit' à tout moment pour quitter le programme.");
+                Console.WriteLine("\nPour afficher un mot spécifique de l'historique, utilisez : 'history <index>' où <index> est un numéro.");
+                Console.WriteLine("Tapez 'exit' à tout moment pour quitter le programme.");
             }
             else if (currentLanguage == "en")
             {
@@ -60,14 +62,15 @@ namespace ChineseDictionary
                 Console.WriteLine("8. save                         - Saves search results into an XML, JSON, or TXT file.");
                 Console.WriteLine("9. add                          - Adds a new word to the dictionary.");
                 Console.WriteLine("10. undo                        - Cancels the last performed search.");
-                Console.WriteLine("11. history                     - Displays the search history.");
+                Console.WriteLine("11. history [index]             - Displays the search history or a specific word by index.");
                 Console.WriteLine("12. changelanguage <language>   - Switches the language ('fr' or 'en').");
 
                 Console.WriteLine("\n--- Additional Instructions ---");
                 Console.WriteLine("When using a command that requires a word, like 'getpinyin' or 'gettranslation',");
                 Console.WriteLine("you must provide a Chinese word you wish to search for.");
                 Console.WriteLine("For example: 'getpinyin' followed by a Chinese word like '你好'.");
-                Console.WriteLine("\nType 'exit' at any time to leave the program.");
+                Console.WriteLine("\nTo display a specific word from the history, use: 'history <index>' where <index> is a number.");
+                Console.WriteLine("Type 'exit' at any time to leave the program.");
             }
             else
             {

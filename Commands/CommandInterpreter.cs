@@ -119,7 +119,14 @@ namespace ChineseDictionary
                         break;
 
                     case "history":
-                        historyStack.ShowHistory();
+                        if (!string.IsNullOrWhiteSpace(argument))
+                        {
+                            historyStack.ShowSpecificHistory(argument);
+                        }
+                        else
+                        {
+                            historyStack.ShowHistory();
+                        }
                         break;
 
                     case "changelanguage":
