@@ -16,15 +16,13 @@ namespace ChineseDictionary
 
             if (string.IsNullOrWhiteSpace(trad) || trad.ToLower() == "exit") return;
 
-            // Vérifier si la saisie est en caractères chinois
             if (!IsChinese(trad))
             {
                 Console.WriteLine("La forme traditionnelle doit être écrite en caractères chinois.");
                 return;
             }
 
-            // Charger le fichier XML
-            XDocument doc = XDocument.Load("./Data/cfdict.xml");
+            var doc = XmlCache.GetDocument();
 
             if (doc.Root == null || doc.Root.Name != "dic")
             {
@@ -32,7 +30,6 @@ namespace ChineseDictionary
                 return;
             }
 
-            // Vérifier si le mot existe déjà
             var existingWord = doc.Descendants("word").FirstOrDefault(w =>
                 w.Element("trad")?.Value == trad);
 
@@ -50,7 +47,6 @@ namespace ChineseDictionary
                 return;
             }
 
-            // Récupérer les autres informations
             Console.Write("Entrez la forme simplifiée du mot : ");
             string? simp = Console.ReadLine();
 
@@ -68,7 +64,6 @@ namespace ChineseDictionary
 
             var translations = translationsInput.Split(',');
 
-            // Générer un ID unique pour le mot
             int newId;
             var words = doc.Descendants("word");
 
@@ -86,6 +81,9 @@ namespace ChineseDictionary
                 new XElement("py", pinyin),
                 new XElement("trans", translations.Select(t => new XElement("fr", t.Trim())))
             );
+
+            // Créer une sauvegarde avant modification
+            File.Copy("./Data/cfdict.xml", "./Data/cfdict_backup.xml", overwrite: true);
 
             doc.Root.Add(newWord);
             doc.Save("./Data/cfdict.xml");
@@ -105,8 +103,6 @@ namespace ChineseDictionary
         private bool IsChinese(string? input)
         {
             if (string.IsNullOrEmpty(input)) return false;
-
-            // Regex pour détecter des caractères chinois
             Regex chineseRegex = new Regex(@"\p{IsCJKUnifiedIdeographs}");
             return chineseRegex.IsMatch(input);
         }

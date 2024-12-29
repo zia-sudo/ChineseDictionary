@@ -11,6 +11,8 @@ namespace ChineseDictionary
 
             Console.WriteLine("Bienvenue dans le Dictionnaire Chinois !");
             Console.WriteLine("Tapez 'help' pour afficher les commandes disponibles.");
+            Console.WriteLine("Les commandes 'help' sont par défaut en français.");
+            Console.WriteLine("Si vous voulez avoir la version anglaise. Tapez 'changelanguage en'.");
 
             bool exitProgram = false;
 

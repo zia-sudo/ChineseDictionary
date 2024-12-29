@@ -6,27 +6,36 @@ namespace ChineseDictionary
 {
     public class RemoveCommand
     {
-        // Exécuter la commande pour supprimer un mot du dictionnaire en fonction de sa forme traditionnelle ou simplifiée
         public void Execute(string word)
         {
-            // Charger le fichier XML
-            XDocument doc = XDocument.Load("./Data/cfdict.xml");
+            if (string.IsNullOrWhiteSpace(word))
+            {
+                Console.WriteLine("Veuillez entrer un mot valide.");
+                return;
+            }
 
-            // Chercher le mot en fonction de la forme traditionnelle ou simplifiée
+            word = word.Trim();
+            var doc = XmlCache.GetDocument();
+
+            if (doc.Root == null || doc.Root.Name != "dic")
+            {
+                Console.WriteLine("Le fichier XML n'a pas une racine valide (<dic> attendue).");
+                return;
+            }
+
             var wordElement = doc.Descendants("word")
                 .FirstOrDefault(w =>
                     w.Element("trad")?.Value.Equals(word, StringComparison.OrdinalIgnoreCase) == true ||
                     w.Element("simp")?.Value.Equals(word, StringComparison.OrdinalIgnoreCase) == true);
 
-            // Si le mot est trouvé, on le supprime
             if (wordElement != null)
             {
                 Console.WriteLine($"Le mot '{word}' a été trouvé et sera supprimé.");
-                
-                // Supprimer l'élément du dictionnaire
+
+                // Créer une sauvegarde avant suppression
+                File.Copy("./Data/cfdict.xml", "./Data/cfdict_backup.xml", overwrite: true);
+
                 wordElement.Remove();
-                
-                // Sauvegarder le fichier XML après suppression
                 doc.Save("./Data/cfdict.xml");
 
                 Console.WriteLine("Le mot a été supprimé avec succès.");
