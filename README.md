@@ -69,11 +69,20 @@ Ajoutez un nouveau mot dans le dictionnaire.
 **Exemple :**
 ```plaintext
 > add
-Entrez la forme traditionnelle : 妳
-Entrez la forme simplifiée : 你
-Entrez le pinyin : nǐ
-Entrez les traductions (séparées par une virgule) : tu, vous
-Mot ajouté : 妳 (你) - Pinyin : nǐ - Traductions : tu, vous
+Ajout d'un nouveau mot au dictionnaire
+Entrez la forme traditionnelle du mot : 肉夹馍
+Entrez la forme simplifiée du mot : 肉夹馍
+Entrez le pinyin du mot : rou4jia1mo2
+Entrez les traductions (séparées par des virgules) : viande insérée dans du pain,  une sorte de petit sandwich constitué d'un petit pain rond, au milieu duquel on place de la viande
+Le mot a été ajouté avec succès !
+ID : 362090
+Forme Traditionnelle : 肉夹馍
+Forme Simplifiée : 肉夹馍
+Pinyin : rou4jia1mo2
+Traductions : 
+  - viande insérée dans du pain
+  - une sorte de petit sandwich constitué d'un petit pain rond
+  - au milieu duquel on place de la viande
 ```
 
 ### **2. Quitter l'application** : `exit`
