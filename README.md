@@ -225,6 +225,26 @@ Veuillez entrer le délimiteur utilisé dans le fichier (par défaut ',') : ,
 Voulez-vous sauvegarder ces données dans le dictionnaire principal ? (y/n) : y
 Mots sauvegardés dans cfdict.xml avec succès !
 ```
+
+### **15. Rechercher un mot ou un caractère :** : `search`
+La commande search permet de rechercher un mot ou un caractère chinois dans le dictionnaire. Elle retourne toutes les informations associées au mot recherché, notamment :
+- La forme traditionnelle.
+- La forme simplifiée.
+- Le pinyin.
+- Les traductions en français.
+
+**Exemple :**
+```plaintext
+> search 妳
+Informations pour le mot : 妳
+Forme Traditionnelle : 妳
+Forme Simplifiée : 妳
+Pinyin : ni3
+Traductions : 
+  - (arch.) toi (féminin)
+  - tu (pour les femmes)
+Ajouté à l'historique : 妳
+```
 ---
 
 ## **Prérequis techniques**

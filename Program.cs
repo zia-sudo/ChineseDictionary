@@ -32,7 +32,7 @@ namespace ChineseDictionary
                 }
             }
 
-            Console.WriteLine("Au revoir !");
+            Console.WriteLine("N'héistez pas à revenir nous voir !");
         }
     }
 }

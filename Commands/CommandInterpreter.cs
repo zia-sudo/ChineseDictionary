@@ -30,7 +30,8 @@ namespace ChineseDictionary
                         break;
 
                     case "exit":
-                        return true;
+                        return new ExitCommand().Execute();
+
 
                     case "getpinyin":
                         if (!string.IsNullOrWhiteSpace(argument))

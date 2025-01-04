@@ -7,8 +7,8 @@ namespace ChineseDictionary
         // Exécuter la commande pour quitter le programme
         public bool Execute()
         {
-            Console.WriteLine("Vous venez de cliquer sur 'exit' ! Merci d'avoir utilisé ce dictionnaire !");
-            return true;
+            Console.WriteLine("Au revoir ! Merci d'avoir utilisé ChineseDictionary !");
+            return true; // Indique à CommandInterpreter de terminer le programme
         }
     }
 }
