@@ -49,7 +49,7 @@ Ce dossier contient la gestion de l'historique des recherches via la classe `His
 
 ---
 
-## **XmlCache.cs : Gestion optimisée des données**
+### **XmlCache.cs : Gestion optimisée des données**
 
 La classe **`XmlCache`** est responsable de la gestion du fichier XML principal contenant les données du dictionnaire. Elle optimise les performances en mettant en cache le contenu du fichier pour éviter de le charger plusieurs fois inutilement.
 
